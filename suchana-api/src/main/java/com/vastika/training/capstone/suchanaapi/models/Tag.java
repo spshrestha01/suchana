@@ -11,10 +11,8 @@ import javax.persistence.*;
 @Table(name = "tag")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Tag {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String name;
 }

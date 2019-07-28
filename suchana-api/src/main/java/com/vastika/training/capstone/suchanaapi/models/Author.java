@@ -1,5 +1,6 @@
 package com.vastika.training.capstone.suchanaapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "author")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +25,7 @@ public class Author {
     @OneToMany
     private List<Article> articles;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany
     @JoinTable(
             name = "author_category",
             joinColumns = @JoinColumn(name = "author_id"),

@@ -23,7 +23,7 @@ public class AuthorController {
         return new ResponseEntity<>(this.authorService.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/authors/{id}")
+    @RequestMapping("/authors/{id}")
     public ResponseEntity<Author> findById(@PathVariable("id") int id){
         return new ResponseEntity<>(this.authorService.findById(id), HttpStatus.OK);
     }
@@ -39,7 +39,7 @@ public class AuthorController {
     public ResponseEntity<Author> createAuthor(@RequestBody Author author){
         log.info("createAuthor() -> {}", author);
         author.setDateCreated(LocalDate.now());
-        return new ResponseEntity<>(this.authorService.createAuthor(author), HttpStatus.OK);
+        return new ResponseEntity<>(this.authorService.createAuthor(author), HttpStatus.CREATED);
     }
 
 }

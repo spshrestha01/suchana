@@ -1,5 +1,6 @@
 package com.vastika.training.capstone.suchanaapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "article")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

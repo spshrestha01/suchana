@@ -42,6 +42,6 @@ public class CategoryController {
 
     @RequestMapping(value = "/categories", method = RequestMethod.POST)
     public ResponseEntity<Category> createCategory(@RequestBody Category category){
-        return new ResponseEntity<>(this.categoryService.createCategory(category), HttpStatus.OK);
+        return new ResponseEntity<>(this.categoryService.createCategory(category), HttpStatus.CREATED);
     }
 }
