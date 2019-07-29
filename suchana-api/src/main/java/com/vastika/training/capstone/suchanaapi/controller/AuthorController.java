@@ -1,14 +1,17 @@
 package com.vastika.training.capstone.suchanaapi.controller;
 
+import com.vastika.training.capstone.suchanaapi.exceptions.SuchanaDataException;
 import com.vastika.training.capstone.suchanaapi.models.Author;
 import com.vastika.training.capstone.suchanaapi.services.AuthorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -36,9 +39,12 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/authors", method = RequestMethod.POST)
-    public ResponseEntity<Author> createAuthor(@RequestBody Author author){
+    public ResponseEntity<Author> createAuthor(@Valid @RequestBody Author author, BindingResult result){
         log.info("createAuthor() -> {}", author);
-        author.setDateCreated(LocalDate.now());
+        if(result.hasErrors()){
+            throw new SuchanaDataException("Invalid Payload", result.getFieldErrors());
+        }
+        author.setDateCreated(LocalDateTime.now());
         return new ResponseEntity<>(this.authorService.createAuthor(author), HttpStatus.CREATED);
     }
 

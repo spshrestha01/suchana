@@ -5,10 +5,9 @@ import com.vastika.training.capstone.suchanaapi.models.Article;
 import java.util.List;
 
 public interface ArticleService {
+    Article save(Article article);
     List<Article> findAll();
-    Article findById(int id);
-    Article create(Article article);
-    Article update(Article article);
-    void delete(int id);
-//    Article findByTitle(String title);
+    List<Article> findByAuthorId(Integer authorId);
+    List<Article> findByCategory(String category);
+    List<Article> findByTag(String tag);
 }
