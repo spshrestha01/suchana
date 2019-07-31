@@ -1,6 +1,8 @@
 package com.vastika.training.capstone.suchanaapi.services.impl;
 
+import com.vastika.training.capstone.suchanaapi.exceptions.SuchanaApiException;
 import com.vastika.training.capstone.suchanaapi.models.Article;
+import com.vastika.training.capstone.suchanaapi.models.Author;
 import com.vastika.training.capstone.suchanaapi.repositories.ArticleRepository;
 import com.vastika.training.capstone.suchanaapi.services.ArticleService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,14 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article save(Article article) {
         log.info("save()");
+        Article articleInDb = this.articleRepository.findByTitle(article.getTitle());
+        if(articleInDb != null){
+            throw new SuchanaApiException("Article exists with the title:" + article.getTitle(), 409);
+        }
+        Author author = article.getAuthor();
+        if(!author.getCategories().contains(article.getCategory())){
+            throw new SuchanaApiException("The article category does not match with the author category", 400);
+        }
         return this.articleRepository.save(article);
     }
 
@@ -40,5 +50,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> findByTag(String tag) {
         return this.articleRepository.findAllByTag(tag);
+    }
+
+    @Override
+    public void deleteArticle(int id) {
+        this.articleRepository.deleteById(id);
     }
 }

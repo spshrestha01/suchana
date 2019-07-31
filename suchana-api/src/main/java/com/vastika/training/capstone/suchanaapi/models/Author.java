@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -19,21 +22,28 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank
     @Size(min = 2, max = 30)
-    @Pattern(regexp = "a-zA-Z")
+    @Pattern(regexp = "[a-zA-Z]+")
     private String firstName;
 
+    @NotBlank
     @Size(min = 2, max = 30)
-    @Pattern(regexp = "[A-Za-z]")
+    @Pattern(regexp = "[A-Za-z]+")  //+ signifies 1 or more
     private String lastName;
+
+    @NotBlank
+    @Size(min = 2, max = 30)
+    @Pattern(regexp = "[a-zA-Z0-9]+")
+    private String username;
 
     private LocalDateTime dateCreated;
 
     @OneToMany(mappedBy = "author")
     private List<Article> articles;
 
-//    @Valid
-//    @NotNull
+    @Valid
+    @NotNull
     @ManyToMany
     @JoinTable(
             name = "author_category",

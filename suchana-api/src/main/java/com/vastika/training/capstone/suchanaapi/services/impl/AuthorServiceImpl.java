@@ -2,7 +2,9 @@ package com.vastika.training.capstone.suchanaapi.services.impl;
 
 import com.vastika.training.capstone.suchanaapi.exceptions.SuchanaApiException;
 import com.vastika.training.capstone.suchanaapi.models.Author;
+import com.vastika.training.capstone.suchanaapi.models.Category;
 import com.vastika.training.capstone.suchanaapi.repositories.AuthorRepository;
+import com.vastika.training.capstone.suchanaapi.repositories.CategoryRepository;
 import com.vastika.training.capstone.suchanaapi.services.AuthorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Autowired
     private AuthorRepository authorRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<Author> findAll() {
@@ -53,6 +58,18 @@ public class AuthorServiceImpl implements AuthorService {
 
         if(author.getCategories() == null){
             author.setCategories(new HashSet<>());
+        }else{
+            List<Category> existingCategories = this.categoryRepository.findAll();
+            for(Category upcoming: author.getCategories()){
+                if(!existingCategories.contains(upcoming)){
+                    throw new SuchanaApiException("No Category exists with id: " + upcoming.getId() + ", name: " + upcoming.getName(), 400);
+                }
+            }
+        }
+        Author authorInDb = this.authorRepository.findByUsername(author.getUsername());
+
+        if(authorInDb != null){
+            throw new SuchanaApiException("Author exists with the username: " + authorInDb.getUsername(), 409);
         }
 
         Author created = this.authorRepository.save(author);

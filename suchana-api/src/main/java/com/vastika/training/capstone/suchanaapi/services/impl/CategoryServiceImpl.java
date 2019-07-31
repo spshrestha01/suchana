@@ -47,6 +47,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category createCategory(Category category) {
+        Category categoryInDb = this.categoryRepository.findByName(category.getName());
+        if(categoryInDb != null){
+            throw new SuchanaApiException("Category already exists with the name: " + category.getName(), 409);
+        }
         return this.categoryRepository.save(category);
     }
 }

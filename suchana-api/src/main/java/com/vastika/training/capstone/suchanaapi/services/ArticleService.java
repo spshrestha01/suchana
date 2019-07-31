@@ -10,4 +10,5 @@ public interface ArticleService {
     List<Article> findByAuthorId(Integer authorId);
     List<Article> findByCategory(String category);
     List<Article> findByTag(String tag);
+    void deleteArticle(int id);
 }

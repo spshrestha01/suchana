@@ -1,6 +1,7 @@
 package com.vastika.training.capstone.suchanaapi.controller;
 
 
+import com.vastika.training.capstone.suchanaapi.exceptions.SuchanaApiException;
 import com.vastika.training.capstone.suchanaapi.exceptions.SuchanaDataException;
 import com.vastika.training.capstone.suchanaapi.models.Article;
 import com.vastika.training.capstone.suchanaapi.models.Author;
@@ -12,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -68,5 +68,35 @@ public class ArticleController {
         return new ResponseEntity<>(this.articleService.findByAuthorId(authorId), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/authors/{authorId}/articles/{articleId}", method = RequestMethod.PUT)
+    public ResponseEntity<Article> updateArticle(@Valid @RequestBody Article article, BindingResult result,
+                                                 @PathVariable("articleId") int articleId, @PathVariable("authorId") int authorId){
+        log.info("updateArticle() -> id : {}", articleId);
+
+        if(result.hasErrors()){
+            throw new SuchanaDataException("Invalid Payroll", result.getFieldErrors());
+        }
+        Author author = this.authorService.findById(authorId);
+        article.setId(articleId);
+
+        if(author.getId() != article.getAuthor().getId()){
+            throw new SuchanaApiException("The author is not authorized to update the article with id :" + article.getId(), 400);
+        }
+        Article updated = this.articleService.save(article);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/authors/{authorId}/articles/{articleId}", method = RequestMethod.DELETE)
+    public ResponseEntity<HttpStatus> deleteArticle(@RequestParam Article article,
+                                                    @PathVariable("authorId") int authorId, @PathVariable("articleId") int articleId){
+       Author author = this.authorService.findById(authorId);
+
+        if(author.getId() != article.getAuthor().getId()){
+            throw new SuchanaApiException("The author is not authorized to delete the article with id :" + article.getId(), 400);
+        }
+        this.articleService.deleteArticle(articleId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

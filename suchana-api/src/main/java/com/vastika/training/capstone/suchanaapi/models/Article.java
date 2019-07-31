@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -19,9 +20,12 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank
+    @Column(unique = true)
     @Size(min = 10, max = 100)
     private String title;
 
+    @NotBlank
     @Size(min = 10, max = 1000)
     private String content;
 
