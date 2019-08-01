@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'suchana-ui';
+  title = 'suchana';
+  name = 'Saurav Shrestha'
 }

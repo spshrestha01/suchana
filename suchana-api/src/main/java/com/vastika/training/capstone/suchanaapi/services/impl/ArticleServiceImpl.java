@@ -38,6 +38,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Article findById(int id) {
+        return this.articleRepository.findById(id);
+    }
+
+    @Override
     public List<Article> findByAuthorId(Integer authorId) {
         return this.articleRepository.findAllByAuthor(authorId);
     }

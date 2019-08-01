@@ -41,6 +41,11 @@ public class ArticleController {
         return new ResponseEntity<>(articles, HttpStatus.OK);
     }
 
+    @GetMapping("/articles/{id}")
+    public ResponseEntity<Article> findArticleById(@PathVariable("id") int id){
+        Article article = this.articleService.findById(id);
+        return new ResponseEntity<>(article, HttpStatus.OK);
+    }
 
     // /api/v1/users/{id}/accounts
     // example for api naming

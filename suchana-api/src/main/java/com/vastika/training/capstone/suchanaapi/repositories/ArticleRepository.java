@@ -25,4 +25,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
     List<Article> findAllByTag(String Tag);
 
     Article findByTitle(String title);
+
+    Article findById(int id);
 }
