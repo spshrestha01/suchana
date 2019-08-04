@@ -1,11 +1,10 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {NewsComponent} from "./components/news/news.component";
-import {SportsComponent} from "./components/sports/sports.component";
-import {PoliticsComponent} from "./components/politics/politics.component";
-import {SingleNewsComponent} from "./components/single-news/single-news.component";
-import {EntertainmentComponent} from "./components/entertainment/entertainment.component";
-import {ScienceComponent} from "./components/science/science.component";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import {NewsComponent} from "./news/news.component";
+import {SportsComponent} from "./sports/sports.component";
+import {PoliticsComponent} from "./politics/politics.component";
+import {ScienceComponent} from "./science/science.component";
+import {EntertainmentComponent} from "./entertainment/entertainment.component";
 
 const routes: Routes = [
   {
@@ -21,20 +20,17 @@ const routes: Routes = [
     component: PoliticsComponent
   },
   {
-    path: "news/:id",
-    component: SingleNewsComponent
-  },
-  {
-    path: "Entertainment",
-    component: EntertainmentComponent
-  },
-  {
-    path: "Science",
+    path: 'Science',
     component: ScienceComponent
   },
   {
-    path: "**",
-    component: NewsComponent
+    path: 'Entertainment',
+    component: EntertainmentComponent
+  },
+  {
+    path: '',
+    redirectTo: 'news',
+    pathMatch: 'full'
   }
 ];
 
@@ -42,5 +38,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule { }

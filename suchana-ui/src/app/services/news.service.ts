@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/internal/Observable";
 
-const BASEURL = "http://localhost:8080";
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
+
+  API_BASE_URL = "http://localhost:8080";
+
+  // inject httpClient into service
   constructor(private http: HttpClient) { }
 
-  getAllNews(category):Observable<any>{
-    if(category){
-      return this.http.get(`${BASEURL}/articles?category=${category}`);
-    }
-    return this.http.get(`${BASEURL}/articles`);
-  }
+  getNews(category?: string): Observable<any> {
+    let url = this.API_BASE_URL + "/articles";
 
-  getArticleById(id): Observable<any>{
-    return this.http.get(`${BASEURL}/articles/${id}`);
+    if (category) {
+      url = url + "?category=" + category;
+    }
+    return this.http.get(url);
   }
 }
