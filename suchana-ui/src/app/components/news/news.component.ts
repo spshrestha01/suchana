@@ -9,18 +9,14 @@ import {Router} from "@angular/router";
 })
 export class NewsComponent implements OnInit {
 
-  allNews: [];
-  constructor(private newsService: NewsService, private router: Router) { }
+  allNews: any;
+  constructor(private newsService: NewsService) { }
 
   ngOnInit() {
-    this.newsService.getAllNews().subscribe(data => {
+    this.newsService.getAllNews('').subscribe(data => {
       this.allNews = data;
     })
   }
 
-  goToNews(newsId){
-    let a = "news/" + newsId;
-    this.router.navigate([a]);
-  }
 
 }

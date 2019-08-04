@@ -9,16 +9,11 @@ const BASEURL = "http://localhost:8080";
 export class NewsService {
   constructor(private http: HttpClient) { }
 
-  getAllNews():Observable<any>{
+  getAllNews(category):Observable<any>{
+    if(category){
+      return this.http.get(`${BASEURL}/articles?category=${category}`);
+    }
     return this.http.get(`${BASEURL}/articles`);
-  }
-
-  getSportsNews():Observable<any>{
-    return this.http.get(`${BASEURL}/articles?category=sports`);
-  }
-
-  getPoliticsNews(): Observable<any>{
-    return this.http.get(`${BASEURL}/articles?category=politics`);
   }
 
   getArticleById(id): Observable<any>{

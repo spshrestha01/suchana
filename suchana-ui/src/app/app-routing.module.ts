@@ -1,9 +1,11 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {NewsComponent} from "./components/news/news.component";
 import {SportsComponent} from "./components/sports/sports.component";
 import {PoliticsComponent} from "./components/politics/politics.component";
 import {SingleNewsComponent} from "./components/single-news/single-news.component";
+import {EntertainmentComponent} from "./components/entertainment/entertainment.component";
+import {ScienceComponent} from "./components/science/science.component";
 
 const routes: Routes = [
   {
@@ -11,16 +13,24 @@ const routes: Routes = [
     component: NewsComponent
   },
   {
-    path: "sports",
-    component:SportsComponent
+    path: "Sports",
+    component: SportsComponent
   },
   {
-    path: "politics",
+    path: "Politics",
     component: PoliticsComponent
   },
   {
     path: "news/:id",
     component: SingleNewsComponent
+  },
+  {
+    path: "Entertainment",
+    component: EntertainmentComponent
+  },
+  {
+    path: "Science",
+    component: ScienceComponent
   },
   {
     path: "**",
@@ -32,4 +42,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
