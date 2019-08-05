@@ -10,14 +10,10 @@ import {CategoryService} from "../../../services/category.service";
 })
 export class AuthorsComponent implements OnInit {
 
-  authors= [];
+  authors = [];
+  authorToCreate : Author;
   categories = [];
-
-  editingAuthor = false;
-  authorToEdit;
-
-  creatingAuthor = false;
-  authorToCreate;
+  author: Author;
 
   constructor(private authorService: AuthorService, private categoryService: CategoryService) { }
 
@@ -33,40 +29,33 @@ export class AuthorsComponent implements OnInit {
   }
 
   getAuthors(){
-    this.authorService.GetAuthors().subscribe(data => {
+    this.authorService.getAuthors().subscribe(data => {
       this.authors = data;
     });
   }
 
-  editAuthor(author){
-    this.editingAuthor = true;
-    this.authorToEdit = author;
+  editAuthor(author) {
+    this.author = author;
   }
 
-  submitAuthorEdit(author){
-    this.editingAuthor = false;
-    this.authorService.UpdateAuthor(author).subscribe(data => {
-      this.authorToEdit = data;
-    });
-  }
-
-  deleteAuthor(author){
-    this.authorService.DeleteAuthor(author.id).subscribe( () => this.getAuthors());
+  submitEditAuthor() {
+    this.authorService.updateAuthor(this.author).subscribe(() => this.getAuthors());
+    this.author = null;
   }
 
   createAuthorForm(){
-    this.creatingAuthor = true;
     this.authorToCreate = new Author();
   }
 
-  createAuthor(author){
-    this.authorService.CreateAuthor(author).subscribe( (data) =>
-      this.authors.push(data));
+  createAuthor(){
+    this.authorService.createAuthor(this.authorToCreate).subscribe( (data) => this.authors.push(data));
+    this.authorToCreate = null;
+
   }
 
   cancel(){
-    this.editingAuthor = false;
-    this.creatingAuthor = false;
+    this.author = null;
+    this.authorToCreate = null;
   }
 
 }

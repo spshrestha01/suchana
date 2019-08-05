@@ -16,6 +16,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Username</th>
+        <th>Categories</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -24,116 +25,24 @@
         <td>{{author.id}}</td>
         <td>{{author.firstName}} {{author.lastName}}</td>
         <td>{{author.username}}</td>
-        <!--        <td>-->
-        <!--          <span *ngFor="let category for author.categories">-->
-        <!--            <span>{{category.name}}</span>-->
-        <!--          </span>-->
-        <!--        </td>-->
+        <td>
+                  <span *ngFor="let category of author.categories; let i = index">
+                    <span>{{category.name}}</span>
+                    <span *ngIf="author.categories.length - 1 != i">, </span>
+                  </span>
+        </td>
         <td>
           <button class="btn btn-primary mr-3" (click)="editAuthor(author)">Edit</button>
-          <button class="btn btn-danger" (click)="deleteAuthor(author)">Delete</button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  <!--start edit form-->
-  <div *ngIf="editingAuthor">
-    <div class="col mb-5">
-      <h3>Edit Tag</h3>
-    </div>
-    <form class="form-horizontal" (submit)="submitAuthorEdit(authorToEdit)">
-      <div class="form-group row">
-        <label class="control-label col-sm-2">Id:</label>
-        <div class="col-sm-10">
-          <input readonly type="email" class="form-control" value="{{authorToEdit.id}}">
-        </div>
-      </div>
+  <app-edit-author *ngIf="author" [author]="author" [categories]="categories"
+                   (updateAuthor)="submitEditAuthor()" (cancelEvent)="cancel()"></app-edit-author>
 
-      <div class="form-group row">
-        <label class="control-label col-sm-2">Firstname:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="firstName" [(ngModel)]="authorToEdit.firstName">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="control-label col-sm-2">LastName:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="lastName" [(ngModel)]="authorToEdit.lastName">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="control-label col-sm-2">Username:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="username" [(ngModel)]="authorToEdit.username">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="control-label col-sm-2">Categories:</label>
-        <div class="col-sm-10">
-          <div *ngFor="let category of authorToEdit.categories">
-            <input type="checkbox" class="form-control" name="category" [(ngModel)]="category.name"/> {{category.name}}
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <div class="col-sm-6">
-          <button type="submit" class="btn btn-primary float-right">Submit</button>
-        </div>
-        <div class="col-sm-6">
-          <button class="btn btn-danger" (click)="cancel()">Cancel</button>
-        </div>
-      </div>
-    </form>
-  </div>
-  <!--end of edit form-->
-
-  <div *ngIf="creatingAuthor">
-    <div class="col mb-5">
-      <h3>Add Tag</h3>
-    </div>
-
-    <form class="form-horizontal" (submit)="createAuthor(authorToCreate)">
-      <!--      <div class="form-group row">
-              <label class="control-label col-sm-2">Id:</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" [(ngModel)]="tagToCreate.id">
-              </div>
-            </div>-->
-      <div class="form-group row">
-        <label class="control-label col-sm-2">FirstName:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="firstName" [(ngModel)]="authorToCreate.firstName">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="control-label col-sm-2">LastName:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="lastName" [(ngModel)]="authorToCreate.lastName">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="control-label col-sm-2">Username:</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" name="username" [(ngModel)]="authorToCreate.username">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <div class="col-sm-6">
-          <button type="submit" class="btn btn-primary float-right">Submit</button>
-        </div>
-        <div class="col-sm-6">
-          <button class="btn btn-danger" (click)="cancel()">Cancel</button>
-        </div>
-      </div>
-    </form>
-  </div>
+  <app-create-author *ngIf="authorToCreate" [author]="authorToCreate"
+                     [categories]="categories" (createAuthor)="createAuthor()"
+                     (cancelEvent)="cancel()"></app-create-author>
 </div>

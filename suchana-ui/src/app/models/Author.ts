@@ -1,9 +1,8 @@
 export class Author{
   id: number;
-  firstName: String;
-  lastName: String;
-  username: String;
-  dateCreated: any;
-  articles: any;
-  categories: any;
+  firstName: string;
+  lastName: string;
+  username: string;
+  dateCreated: string;
+  categories: Author[];
 }

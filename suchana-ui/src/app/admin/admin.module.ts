@@ -6,13 +6,17 @@ import {AdminRoutingModule} from "./admin-routing.module";
 import {FormsModule} from "@angular/forms";
 import { CategoriesComponent } from './category/categories/categories.component';
 import { AuthorsComponent } from './author/authors/authors.component';
+import {EditAuthorComponent} from "./author/edit-author/edit-author.component";
+import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
+import { CreateAuthorComponent } from './author/create-author/create-author.component';
 
 @NgModule({
-  declarations: [TagsComponent, AdminComponent, CategoriesComponent, AuthorsComponent],
+  declarations: [TagsComponent, AdminComponent, CategoriesComponent, AuthorsComponent, EditAuthorComponent, CreateAuthorComponent],
   imports: [
     CommonModule,
     FormsModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    NgMultiSelectDropDownModule.forRoot()
   ]
 })
 export class AdminModule { }
