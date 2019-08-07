@@ -3,6 +3,7 @@ export class Author{
   firstName: string;
   lastName: string;
   username: string;
+  password: string;
   dateCreated: string;
   categories: Author[];
 }

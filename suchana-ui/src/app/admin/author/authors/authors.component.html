@@ -21,28 +21,28 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let author of authors">
-        <td>{{author.id}}</td>
-        <td>{{author.firstName}} {{author.lastName}}</td>
-        <td>{{author.username}}</td>
+      <tr *ngFor="let user of users">
+        <td>{{user.id}}</td>
+        <td>{{user.firstName}} {{user.lastName}}</td>
+        <td>{{user.username}}</td>
         <td>
-                  <span *ngFor="let category of author.categories; let i = index">
+                  <span *ngFor="let category of user.categories; let i = index">
                     <span>{{category.name}}</span>
-                    <span *ngIf="author.categories.length - 1 != i">, </span>
+                    <span *ngIf="user.categories.length - 1 != i">, </span>
                   </span>
         </td>
         <td>
-          <button class="btn btn-primary mr-3" (click)="editAuthor(author)">Edit</button>
+          <button class="btn btn-primary mr-3" (click)="editAuthor(user)">Edit</button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  <app-edit-author *ngIf="author" [author]="author" [categories]="categories"
+  <app-edit-author *ngIf="user" [user]="user" [categories]="categories"
                    (updateAuthor)="submitEditAuthor()" (cancelEvent)="cancel()"></app-edit-author>
 
-  <app-create-author *ngIf="authorToCreate" [author]="authorToCreate"
+  <app-create-author *ngIf="userToCreate" [user]="userToCreate"
                      [categories]="categories" (createAuthor)="createAuthor()"
                      (cancelEvent)="cancel()"></app-create-author>
 </div>

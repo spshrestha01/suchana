@@ -9,7 +9,7 @@ import {Category} from "../../../models/Category";
 })
 export class EditAuthorComponent implements OnInit {
 
-  @Input('author') author: Author;
+  @Input('user') author: Author;
 
   @Input('categories') categories: Category[];
 

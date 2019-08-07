@@ -48,7 +48,7 @@ public class Article {
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
-    private Author author;
+    @JoinColumn(name = "user_id")
+    private User user;
 }
 

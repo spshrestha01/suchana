@@ -15,9 +15,9 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "author")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "articles"})
-public class Author {
+@Table(name = "user")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "articles", "password"})
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -37,17 +37,23 @@ public class Author {
     @Pattern(regexp = "[a-zA-Z0-9]+")
     private String username;
 
+    @NotBlank
+    @Size(min = 3, max = 40)
+    private String password;
+
+    private String role;
+
     private LocalDateTime dateCreated;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "user")
     private List<Article> articles;
 
     @Valid
     @NotNull
     @ManyToMany
     @JoinTable(
-            name = "author_category",
-            joinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"),
+            name = "user_category",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id")
     )
     private Set<Category> categories;

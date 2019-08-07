@@ -9,9 +9,10 @@ import { AuthorsComponent } from './author/authors/authors.component';
 import {EditAuthorComponent} from "./author/edit-author/edit-author.component";
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
 import { CreateAuthorComponent } from './author/create-author/create-author.component';
+import { ArticlesComponent } from './article/articles/articles.component';
 
 @NgModule({
-  declarations: [TagsComponent, AdminComponent, CategoriesComponent, AuthorsComponent, EditAuthorComponent, CreateAuthorComponent],
+  declarations: [TagsComponent, AdminComponent, CategoriesComponent, AuthorsComponent, EditAuthorComponent, CreateAuthorComponent, ArticlesComponent],
   imports: [
     CommonModule,
     FormsModule,

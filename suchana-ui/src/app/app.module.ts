@@ -11,6 +11,9 @@ import {ScienceComponent} from './science/science.component';
 import {AdminModule} from "./admin/admin.module";
 import {HeaderComponent} from './header/header.component';
 import {EntertainmentComponent} from './entertainment/entertainment.component';
+import {AuthModule} from "./auth/auth.module";
+import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
+import { AuthorComponent } from './author/author.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import {EntertainmentComponent} from './entertainment/entertainment.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AdminModule
+    AdminModule,
+    AuthModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

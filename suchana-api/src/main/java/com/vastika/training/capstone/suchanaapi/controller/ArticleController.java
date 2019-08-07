@@ -4,9 +4,9 @@ package com.vastika.training.capstone.suchanaapi.controller;
 import com.vastika.training.capstone.suchanaapi.exceptions.SuchanaApiException;
 import com.vastika.training.capstone.suchanaapi.exceptions.SuchanaDataException;
 import com.vastika.training.capstone.suchanaapi.models.Article;
-import com.vastika.training.capstone.suchanaapi.models.Author;
+import com.vastika.training.capstone.suchanaapi.models.User;
 import com.vastika.training.capstone.suchanaapi.services.ArticleService;
-import com.vastika.training.capstone.suchanaapi.services.AuthorService;
+import com.vastika.training.capstone.suchanaapi.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     @Autowired
-    private AuthorService authorService;
+    private UserService userService;
 
     @GetMapping("/articles")
     public ResponseEntity<List<Article>> findArticle(@RequestParam(value = "category", required = false) String category,
@@ -60,8 +60,8 @@ public class ArticleController {
         }
 
         article.setPublishDate(LocalDateTime.now());
-        Author author = this.authorService.findById(authorId);
-        article.setAuthor(author);
+        User user = this.userService.findById(authorId);
+        article.setUser(user);
         Article saved = articleService.save(article);
 
         log.info("Article saved -> id : {}", saved.getId());
@@ -81,10 +81,10 @@ public class ArticleController {
         if(result.hasErrors()){
             throw new SuchanaDataException("Invalid Payroll", result.getFieldErrors());
         }
-        Author author = this.authorService.findById(authorId);
+        User user = this.userService.findById(authorId);
         article.setId(articleId);
 
-        if(author.getId() != article.getAuthor().getId()){
+        if(user.getId() != article.getUser().getId()){
             throw new SuchanaApiException("The author is not authorized to update the article with id :" + article.getId(), 400);
         }
         Article updated = this.articleService.save(article);
@@ -94,9 +94,9 @@ public class ArticleController {
     @RequestMapping(value = "/authors/{authorId}/articles/{articleId}", method = RequestMethod.DELETE)
     public ResponseEntity<HttpStatus> deleteArticle(@RequestParam Article article,
                                                     @PathVariable("authorId") int authorId, @PathVariable("articleId") int articleId){
-       Author author = this.authorService.findById(authorId);
+       User user = this.userService.findById(authorId);
 
-        if(author.getId() != article.getAuthor().getId()){
+        if(user.getId() != article.getUser().getId()){
             throw new SuchanaApiException("The author is not authorized to delete the article with id :" + article.getId(), 400);
         }
         this.articleService.deleteArticle(articleId);

@@ -10,10 +10,10 @@ import {CategoryService} from "../../../services/category.service";
 })
 export class AuthorsComponent implements OnInit {
 
-  authors = [];
-  authorToCreate : Author;
+  users = [];
+  userToCreate : Author;
   categories = [];
-  author: Author;
+  user: Author;
 
   constructor(private authorService: AuthorService, private categoryService: CategoryService) { }
 
@@ -30,32 +30,32 @@ export class AuthorsComponent implements OnInit {
 
   getAuthors(){
     this.authorService.getAuthors().subscribe(data => {
-      this.authors = data;
+      this.users = data;
     });
   }
 
   editAuthor(author) {
-    this.author = author;
+    this.user = author;
   }
 
   submitEditAuthor() {
-    this.authorService.updateAuthor(this.author).subscribe(() => this.getAuthors());
-    this.author = null;
+    this.authorService.updateAuthor(this.user).subscribe(() => this.getAuthors());
+    this.user = null;
   }
 
   createAuthorForm(){
-    this.authorToCreate = new Author();
+    this.userToCreate = new Author();
   }
 
   createAuthor(){
-    this.authorService.createAuthor(this.authorToCreate).subscribe( (data) => this.authors.push(data));
-    this.authorToCreate = null;
+    this.authorService.createAuthor(this.userToCreate).subscribe( (data) => this.users.push(data));
+    this.userToCreate = null;
 
   }
 
   cancel(){
-    this.author = null;
-    this.authorToCreate = null;
+    this.user = null;
+    this.userToCreate = null;
   }
 
 }
