@@ -12,24 +12,22 @@ export class AuthComponent implements OnInit {
 
   user: LoginRequest;
   loginError = false;
-
-  constructor(private router: Router, private authService: AuthService) {
-  }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-    console.log("Login");
     this.user = new LoginRequest();
   }
 
   submit() {
     console.log(this.user);
     this.authService.login(this.user).subscribe((data) => {
-      localStorage.setItem('loggedInUser', data);
+      localStorage.setItem('loggedInUser', JSON.stringify(data));
       if (data.role == 'ROLE_ADMIN') {
         this.router.navigate(['/admin/tags']);
       } else if (data.role == 'ROLE_AUTHOR') {
-        this.router.navigate(['/admin/authors'])
+        this.router.navigate(['/author/articles'])
       }
+      this.authService.isLoggedIn();
     }, (error) => {
       this.loginError = true;
     })
@@ -37,7 +35,7 @@ export class AuthComponent implements OnInit {
   }
 
   cancel() {
-
+    this.router.navigate(['/']);
   }
 
 }

@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TagsComponent } from './tag/tags/tags.component';
-import { AdminComponent } from './admin.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {TagsComponent} from './tag/tags/tags.component';
+import {AdminComponent} from './admin.component';
 import {AdminRoutingModule} from "./admin-routing.module";
 import {FormsModule} from "@angular/forms";
-import { CategoriesComponent } from './category/categories/categories.component';
-import { AuthorsComponent } from './author/authors/authors.component';
+import {CategoriesComponent} from './category/categories/categories.component';
+import {AuthorsComponent} from './author/authors/authors.component';
 import {EditAuthorComponent} from "./author/edit-author/edit-author.component";
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
-import { CreateAuthorComponent } from './author/create-author/create-author.component';
-import { ArticlesComponent } from './article/articles/articles.component';
+import {CreateAuthorComponent} from './author/create-author/create-author.component';
+import {ArticlesComponent} from './article/articles/articles.component';
 
 @NgModule({
   declarations: [TagsComponent, AdminComponent, CategoriesComponent, AuthorsComponent, EditAuthorComponent, CreateAuthorComponent, ArticlesComponent],
@@ -20,4 +20,5 @@ import { ArticlesComponent } from './article/articles/articles.component';
     NgMultiSelectDropDownModule.forRoot()
   ]
 })
-export class AdminModule { }
+export class AdminModule {
+}
