@@ -1,6 +1,7 @@
 package com.vastika.training.capstone.suchanaapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vastika.training.capstone.suchanaapi.models.types.RoleType;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -41,7 +42,9 @@ public class User {
     @Size(min = 3, max = 40)
     private String password;
 
-    private String role;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
 
     private LocalDateTime dateCreated;
 

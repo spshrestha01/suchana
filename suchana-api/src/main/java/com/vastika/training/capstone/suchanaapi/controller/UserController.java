@@ -2,11 +2,14 @@ package com.vastika.training.capstone.suchanaapi.controller;
 
 import com.vastika.training.capstone.suchanaapi.exceptions.SuchanaDataException;
 import com.vastika.training.capstone.suchanaapi.models.User;
+import com.vastika.training.capstone.suchanaapi.models.dtos.CreateUserRequest;
+import com.vastika.training.capstone.suchanaapi.models.types.RoleType;
 import com.vastika.training.capstone.suchanaapi.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @RequestMapping("/authors")
     public ResponseEntity<List<User>> findAll(){
@@ -39,13 +45,23 @@ public class UserController {
     }
 
     @RequestMapping(value = "/authors", method = RequestMethod.POST)
-    public ResponseEntity<User> createAuthor(@Valid @RequestBody User user, BindingResult result){
+    public ResponseEntity<User> createAuthor(@Valid @RequestBody CreateUserRequest user, BindingResult result){
         log.info("createAuthor() -> {}", user);
         if(result.hasErrors()){
-            throw new SuchanaDataException("Invalid Payload", result.getFieldErrors());
+            throw new SuchanaDataException("Invalid payloads", result.getFieldErrors());
         }
-        user.setDateCreated(LocalDateTime.now());
-        return new ResponseEntity<>(this.userService.createAuthor(user), HttpStatus.CREATED);
+
+        User userToCreate = new User();
+        userToCreate.setArticles(null);
+        userToCreate.setFirstName(user.getFirstName());
+        userToCreate.setLastName(user.getLastName());
+        userToCreate.setUsername(user.getUsername());
+        userToCreate.setPassword(passwordEncoder.encode(user.getPassword()));
+        userToCreate.setDateCreated(LocalDateTime.now());
+        userToCreate.setRole(RoleType.ROLE_AUTHOR);
+        userToCreate.setCategories(user.getCategories());
+
+        return new ResponseEntity<>(this.userService.createAuthor(userToCreate), HttpStatus.CREATED);
     }
 
 }
