@@ -19,7 +19,6 @@ export class AuthComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.user);
     this.authService.login(this.user).subscribe((data) => {
       localStorage.setItem('loggedInUser', JSON.stringify(data));
       if (data.role == 'ROLE_ADMIN') {
